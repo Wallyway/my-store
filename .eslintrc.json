@@ -1,0 +1,19 @@
+//Este archivo sirve para configurar las reglas de ESLint, que es una herramienta que nos ayuda
+//a mantener un código limpio y consistente. En este caso, se está utilizando la configuración recomendada por ESLint y la de Prettier,
+// que es una herramienta que nos ayuda a formatear el código de manera automática. Además, se están deshabilitando las reglas que no son
+// necesarias para este proyecto y se está configurando el entorno en el que se está trabajando.
+
+{
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "extends": ["eslint:recommended", "prettier"],
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest": true
+    },
+    "rules": {
+      "no-console": "warn"
+    }
+  }
