@@ -3,6 +3,7 @@ const { faker } = require('@faker-js/faker')
 
 const router = express.Router()
 
+//-------------GET
 
 //Se usa mas JSON para comunicar con el front
 router.get('/',(req,res)=>{
@@ -26,23 +27,60 @@ router.get('/',(req,res)=>{
 router.get('/filter', (req,res)=>{
   res.send('Soy un filter')
 })
+
 router.get('/:id',(req,res)=>{
   const {id} = req.params
-  res.json({
+  const body = req.body
+  if (id=== "999"){
+    res.status(404).json({
+      message: 'Not found 404',
+    })
+  }else{
+    res.status(200).json({
+      id,
+      name: 'Product 2',
+      price: 1000
+    })
+  }
+
+})
+
+
+//----------POST
+
+router.post('/', (req,res)=>{
+  const {id} = req.params
+  const body = req.body
+  res.status(201).json({
+    message: 'updated',
+    data: body,
     id,
-    name: 'Product 1',
-    price: 100
   })
 })
 
 
-//-----------POST
+//-----------PATCH
 
-router.post('/', (req,res)=>{
-  const body = req.body //No hace falta destrutalizar '{}' porque queremos todo
+//Debe recibir un id del producto a ser modificado
+router.patch('/:id', (req,res)=>{
+  const {id} = req.params
+  const body = req.body
   res.json({
-    message: 'created',
+    message: 'updated',
     data: body,
+    id,
+  })
+})
+
+
+// ------------DELETE
+
+router.delete('/:id', (req,res)=>{
+  const {id} = req.params
+  const body = req.body //No hace falta un body en el delete
+  res.json({
+    message: 'deleted',
+    id,
   })
 })
 module.exports = router
