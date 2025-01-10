@@ -35,4 +35,14 @@ router.get('/:id',(req,res)=>{
   })
 })
 
+
+//-----------POST
+
+router.post('/', (req,res)=>{
+  const body = req.body //No hace falta destrutalizar '{}' porque queremos todo
+  res.json({
+    message: 'created',
+    data: body,
+  })
+})
 module.exports = router

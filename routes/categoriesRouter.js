@@ -1,4 +1,3 @@
-const { de } = require('@faker-js/faker')
 const express = require ('express')
 
 const router = express.Router()
@@ -11,4 +10,4 @@ router.get('/categories/:categoryId/products/:productId',(req,res)=>{
   })
 })
 
-export default router()
+module.exports = router

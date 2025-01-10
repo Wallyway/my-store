@@ -10,6 +10,8 @@ const routerApi= require('./routes')
 const app = express()
 const port = 3000
 
+app.use(express.json()) //Middleware para recibir info tipo json enviados por post
+
 routerApi(app)
 
 app.listen(port,()=>{
