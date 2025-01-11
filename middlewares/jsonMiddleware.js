@@ -1,6 +1,5 @@
-// middlewares/jsonMiddleware.js
-const express = require('express');
+import express from 'express';
 
 const jsonMiddleware = express.json();
 
-module.exports = jsonMiddleware;
+export default jsonMiddleware;

@@ -4,17 +4,17 @@
 
 //API RESTFUL: Sirve para hacer servicios web que se comunican por http mediante metodos GET, POST, PUT, DELETE
 
-const express = require ('express')
-const routerApi= require('./routes')
-const jsonMiddleware = require('./middlewares/jsonMiddleware')
+import express from 'express';
+import routerApi from './routes/index.js';
+import jsonMiddleware from './middlewares/jsonMiddleware.js';
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
-app.use(jsonMiddleware) //Middleware para recibir info tipo json enviados por post
+app.use(jsonMiddleware); //Middleware para recibir info tipo json enviados por post
 
-routerApi(app)
+routerApi(app);
 
 app.listen(port,()=>{
-  console.log(`Listening at http://localhost:${port}`)  //Should be a warning (console.logs unwanted in production)
-})
+  console.log(`Listening at http://localhost:${port}`);  //Should be a warning (console.logs unwanted in production)
+});
