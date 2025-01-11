@@ -20,8 +20,14 @@ class ProductService {
     }
   }
 
-  create(){
+  create(data){
 
+    const newProduct = {
+      id: faker.database.mongodbObjectId(),
+      ...data
+    }
+    this.products.push(newProduct)
+    return newProduct
   }
 
   find(){
@@ -32,12 +38,26 @@ class ProductService {
     return this.products.find(item=> item.id === id)
   }
 
-  updated(){
-
+  updated(id, changes){
+    const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
+    if(index===-1){
+      throw new Error('product not found')
+    }
+    const product = this.products[index]
+    this.products[index] = {
+      ...product,     //"No quiero elimniar todo, quiero persistir todo"
+      ...changes
+    }
+    return this.products[index]
   }
 
-  delete(){
-
+  delete(id){
+    const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
+    if(index===-1){
+      throw new Error('product not found')
+    }
+    this.products.splice(index,1)     //Eliminar UN elemento
+    return {id}
   }
 }
 

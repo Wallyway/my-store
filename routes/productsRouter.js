@@ -28,13 +28,9 @@ router.get('/:id',(req,res)=>{
 //----------POST
 
 router.post('/', (req,res)=>{
-  const {id} = req.params
   const body = req.body
-  res.status(201).json({
-    message: 'Created',
-    data: body,
-    id,
-  })
+  const newProduct = service.create(body)
+  res.status(201).json(newProduct)
 })
 
 //-----------PUT
@@ -56,11 +52,8 @@ router.put('/:id', (req,res)=>{
 router.patch('/:id', (req,res)=>{
   const {id} = req.params
   const body = req.body
-  res.json({
-    message: 'updated',
-    data: body,
-    id,
-  })
+  const product = service.updated(id,body)
+  res.json(product)
 })
 
 
@@ -68,11 +61,8 @@ router.patch('/:id', (req,res)=>{
 
 router.delete('/:id', (req,res)=>{
   const {id} = req.params
-  const body = req.body //No hace falta un body en el delete
-  res.json({
-    message: 'deleted',
-    id,
-  })
+  const rta = service.delete(id)
+  res.json(rta)
 })
 
 export default router;
