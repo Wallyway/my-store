@@ -1,5 +1,7 @@
 //Define la logica de negocio con el fin de no usarlo en routes
 import { faker } from '@faker-js/faker';
+import boom from '@hapi/boom'
+
 
 class ProductService {
   constructor(){
@@ -15,7 +17,7 @@ class ProductService {
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(),10),
         image: faker.image.avatarGitHub(),
-        algo: faker.animal.cat()
+        isBlock: faker.datatype.boolean(),
       })
     }
   }
@@ -40,14 +42,20 @@ class ProductService {
   }
 
   async findOne(id){
-    const name = this.getTotal()
-    return this.products.find(item=> item.id === id)
+    const product = this.products.find(item=> item.id === id)
+    if(!product){
+      throw boom.notFound('product not found')
+    }
+    if(product.isBlock){
+      throw boom.conflict('product is blocked')
+    }
+    return product
   }
 
   async updated(id, changes){
     const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
     if(index===-1){
-      throw new Error('product not found')
+      throw boom.notFound('product not found')
     }
     const product = this.products[index]
     this.products[index] = {
@@ -60,7 +68,7 @@ class ProductService {
   async delete(id){
     const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
     if(index===-1){
-      throw new Error('product not found')
+      throw boom.notFound('product not found')
     }
     this.products.splice(index,1)     //Eliminar UN elemento
     return {id}
