@@ -7,13 +7,19 @@
 import express from 'express';
 import routerApi from './routes/index.js';
 import jsonMiddleware from './middlewares/jsonMiddleware.js';
+import { logErrors, errorHandler } from './middlewares/errorHandler.js';
+
 
 const app = express();
 const port = 3000;
 
-app.use(jsonMiddleware); //Middleware para recibir info tipo json enviados por post
+app.use(jsonMiddleware);          //Middleware para recibir info tipo json enviados por post
 
 routerApi(app);
+
+app.use(logErrors)     //Importante poner de forma secuencial
+app.use(errorHandler)
+
 
 app.listen(port,()=>{
   console.log(`Listening at http://localhost:${port}`);  //Should be a warning (console.logs unwanted in production)

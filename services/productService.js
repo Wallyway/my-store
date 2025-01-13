@@ -7,7 +7,7 @@ class ProductService {
     this.generate()
   }
 
-  generate(){
+  async generate(){
     const limit =  10   //Devuelve la cantidad que uno desea o por defecto 10
     for (let index = 0; index < limit; index++) {
       this.products.push({
@@ -20,7 +20,7 @@ class ProductService {
     }
   }
 
-  create(data){
+  async create(data){
 
     const newProduct = {
       id: faker.database.mongodbObjectId(),
@@ -30,15 +30,21 @@ class ProductService {
     return newProduct
   }
 
-  find(){
-    return this.products
+  async find(){
+    return new Promise((resolve,reject) =>{
+      setTimeout(()=>{
+        resolve(this.products)
+      }, 5000)
+    })
+    // return this.products
   }
 
-  findOne(id){
+  async findOne(id){
+    const name = this.getTotal()
     return this.products.find(item=> item.id === id)
   }
 
-  updated(id, changes){
+  async updated(id, changes){
     const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
     if(index===-1){
       throw new Error('product not found')
@@ -51,7 +57,7 @@ class ProductService {
     return this.products[index]
   }
 
-  delete(id){
+  async delete(id){
     const index = this.products.findIndex(item=> item.id === id)  //Necesitamos hallar la posicion y saber si existe
     if(index===-1){
       throw new Error('product not found')
