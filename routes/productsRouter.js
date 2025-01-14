@@ -1,4 +1,6 @@
 import ProductService from './../services/productService.js';
+import { validatorHandler } from '../middlewares/validatorHandler.js';
+import {createProductSchema, getProductSchema, updateProductSchema} from '../schemas/productSchema.js';
 import express from 'express';
 
 const router = express.Router();
@@ -18,24 +20,30 @@ router.get('/filter', (req,res)=>{
   res.send('Soy un filter')
 })
 
-router.get('/:id',async(req,res,next)=>{
-  try {
-    const {id} = req.params
-    const product = await service.findOne(id)
-    res.json(product)
-  } catch (error) {
-    next(error)
+router.get('/:id',
+  validatorHandler(getProductSchema,'params'),  //Valida primero que el id sea correcto
+  async(req,res,next)=>{
+    try {
+      const {id} = req.params
+      const product = await service.findOne(id)
+      res.json(product)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 
 //----------POST
 
-router.post('/',async (req,res)=>{
-  const body = req.body
-  const newProduct = await service.create(body)
-  res.status(201).json(newProduct)
-})
+router.post('/',
+  validatorHandler(createProductSchema,'body'),   //Se hace de esta forma para que el middleware se ejecute primero
+  async (req,res)=>{
+    const body = req.body
+    const newProduct = await service.create(body)
+    res.status(201).json(newProduct)
+  }
+)
 
 //-----------PUT
 
@@ -53,16 +61,20 @@ router.put('/:id', (req,res)=>{
 //-----------PATCH
 
 //Debe recibir un id del producto a ser modificado
-router.patch('/:id', async (req,res)=>{
-  try {
-    const {id} = req.params
-    const body = req.body
-    const product = await service.updated(id,body)
-    res.json(product)
-  } catch (error) {
-    next(error)
+router.patch('/:id',
+  validatorHandler(getProductSchema,'params'),
+  validatorHandler(updateProductSchema,'body'),
+  async (req,res,next)=>{
+    try {
+      const {id} = req.params
+      const body = req.body
+      const product = await service.updated(id,body)
+      res.json(product)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 
 // ------------DELETE
