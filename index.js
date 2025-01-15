@@ -5,6 +5,7 @@
 //API RESTFUL: Sirve para hacer servicios web que se comunican por http mediante metodos GET, POST, PUT, DELETE
 
 import express from 'express';
+import cors from 'cors';
 import routerApi from './routes/index.js';
 import jsonMiddleware from './middlewares/jsonMiddleware.js';
 import { logErrors, errorHandler, boomErrorHandler} from './middlewares/errorHandler.js';
@@ -13,6 +14,17 @@ import { logErrors, errorHandler, boomErrorHandler} from './middlewares/errorHan
 const app = express();
 const port = 3000;
 
+const whitelist = ['http://localhost:8080', 'https://myapp.co']; //Lista de dominios permitidos
+const options = {               //Esto es para configurar el cors
+  origin: (origin,callback)=>{
+    if(whitelist.includes(origin) || !origin){
+      callback(null,true)
+    }else{
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(options));                //Middleware para habilitar CORS, usualemente se coloca antes de las rutas
 app.use(jsonMiddleware);          //Middleware para recibir info tipo json enviados por post
 
 routerApi(app);
