@@ -12,7 +12,7 @@ import { logErrors, errorHandler, boomErrorHandler} from './middlewares/errorHan
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; //Puerto por defecto o el que se le asigne
 
 const whitelist = ['http://localhost:8080', 'https://myapp.co']; //Lista de dominios permitidos
 const options = {               //Esto es para configurar el cors
@@ -33,6 +33,9 @@ app.use(logErrors)     //Importante poner de forma secuencial
 app.use(boomErrorHandler)
 app.use(errorHandler)
 
+app.get('/api',(req,res)=>{
+  res.send('Server Express');
+})
 
 app.listen(port,()=>{
   console.log(`Listening at http://localhost:${port}`);  //Should be a warning (console.logs unwanted in production)
