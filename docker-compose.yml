@@ -1,0 +1,27 @@
+# Docker Compose configuration for PostgreSQL database service
+#
+# Services:
+#   postgres: PostgreSQL database instance
+#     - Uses postgres:13 image
+#     - Creates database 'my_store'
+#     - Creates user 'wally' with password 'wally'
+#     - Exposes port 5432
+#     - Persists data in ./postgres_data directory
+#
+# Usage:
+#   docker-compose up    # Start the database
+#   docker-compose down  # Stop the database
+
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=my_store
+      - POSTGRES_USER=wally
+      - POSTGRES_PASSWORD=wally
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
