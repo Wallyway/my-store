@@ -37,7 +37,7 @@ services:
 # http://localhost:5050/
 
 ################# TERMINAL ####################
-# docker-compose exec postgres bash  ---> Connect DB
+# docker-compose exec postgres bash  ---> Connect DB with bash
 # psql -h localhost -d my_store - U wally  ---> Connect via terminal
 # visualize tables  ---> \d+
 
