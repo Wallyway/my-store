@@ -12,8 +12,6 @@
 #   docker-compose up    # Start the database
 #   docker-compose down  # Stop the database
 
-version: '3.3'
-
 services:
   postgres:
     image: postgres:13
@@ -25,3 +23,22 @@ services:
       - 5432:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.compose
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - 5050:80
+
+
+################# GUI ######################
+# http://localhost:5050/
+
+################# TERMINAL ####################
+# docker-compose exec postgres bash  ---> Connect DB
+# psql -h localhost -d my_store - U wally  ---> Connect via terminal
+# visualize tables  ---> \d+
+
+
