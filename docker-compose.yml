@@ -8,6 +8,11 @@
 #     - Exposes port 5432
 #     - Persists data in ./postgres_data directory
 #
+# - pgAdmin: Web-based PostgreSQL admin tool
+#   - Environment variables for admin login credentials
+#   - Web interface accessible on port 5050
+#   - Uses dpage/pgadmin4 image
+#
 # Usage:
 #   docker-compose up    # Start the database
 #   docker-compose down  # Stop the database
