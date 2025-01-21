@@ -1,4 +1,4 @@
-import boom from '@hapi/boom'
+
 
 export function logErrors(err,req,res,next){
   console.error(err);

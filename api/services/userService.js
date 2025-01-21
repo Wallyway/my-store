@@ -1,42 +1,34 @@
-import { faker } from '@faker-js/faker';
-
+import {pool} from '../libs/postgres.pool.js';
 
 class UserService {
-  constructor(){
-    this.users=[]
-    this.generate()
+  constructor() {
+    this.pool = pool
+    this.pool.on('error',(err)=> console.log(err))
   }
 
-  generate(){
-    const limit =  30   //Devuelve la cantidad que uno desea o por defecto 10
-    for (let index = 0; index < limit; index++) {
-      this.users.push({
-        id: faker.database.mongodbObjectId(),
-        name: faker.person.fullName(),
-        telephone:faker.finance.accountNumber(),
-        image: faker.person.sex(),
-      })
-    }
+  async create(data) {
+    return data;
   }
 
-  create(){
-
+  async find() {
+    const query = 'SELECT * FROM tasks'
+    const response = await this.pool.query(query)
+    return response.rows
   }
 
-  find(){
-    return this.users
+  async findOne(id) {
+    return { id };
   }
 
-  findOne(id){
-    return this.users.find(user=> user.id === id)
+  async update(id, changes) {
+    return {
+      id,
+      changes,
+    };
   }
 
-  updated(){
-
-  }
-
-  delete(){
-
+  async delete(id) {
+    return { id };
   }
 }
 

@@ -1,12 +1,14 @@
 //Define la logica de negocio con el fin de no usarlo en routes
 import { faker } from '@faker-js/faker';
 import boom from '@hapi/boom'
-
+import {pool} from '../libs/postgres.pool.js';
 
 class ProductService {
   constructor(){
     this.products = []
     this.generate()
+    this.pool = pool
+    this.pool.on('error',(err)=> console.log(err))
   }
 
   async generate(){
@@ -33,12 +35,9 @@ class ProductService {
   }
 
   async find(){
-    return new Promise((resolve,reject) =>{
-      setTimeout(()=>{
-        resolve(this.products)
-      })
-    })
-    // return this.products
+    const query = 'SELECT * FROM tasks'
+    const response = await this.pool.query(query)
+    return response.rows
   }
 
   async findOne(id){

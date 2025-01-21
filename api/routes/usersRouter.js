@@ -6,10 +6,14 @@ const service = new UserService()
 
 
 //------GET
-router.get('/',(req,res)=>{                   //Obtener todos los usuarios
-  const users = service.find()
-  res.json(users)
-})
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await service.find();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get('/filter', (req,res)=>{            //TODO:Implementar filtro de usuarios
   res.send('Soy un filter')
