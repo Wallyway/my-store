@@ -19,10 +19,15 @@ router.get('/filter', (req,res)=>{            //TODO:Implementar filtro de usuar
   res.send('Soy un filter')
 })
 
-router.get('/:id', (req,res) =>{              //Obtener un usuario especifico
-  const {id} = req.params
-  const user = service.findOne(id)
-  res.json(user)
+router.get('/:id', async (req,res,next) =>{             //Obtener un usuario especifico
+  try {
+    const {id} = req.params
+    console.log(id);
+    const user = await service.findOne(id)
+    res.json(user)
+  } catch (error) {
+    next(error);
+  }
 })
 
 

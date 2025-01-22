@@ -1,23 +1,33 @@
-import {pool} from '../libs/postgres.pool.js';
+import { User } from '../db/models/userModel.js';
 
 class UserService {
-  constructor() {
-    this.pool = pool
-    this.pool.on('error',(err)=> console.log(err))
-  }
+  constructor() {}
 
   async create(data) {
     return data;
   }
 
   async find() {
-    const query = 'SELECT * FROM tasks'
-    const response = await this.pool.query(query)
-    return response.rows
+    const response = await User.findAll();
+    return response
   }
 
   async findOne(id) {
-    return { id };
+    try {
+      const user = await User.findByPk(id, {
+        attributes: ['id', 'email', 'createdAt'], // Specify which fields to return
+        raw: true // Return plain object instead of Sequelize instance
+      });
+
+      if (!user) {
+        throw new Error(`User with id ${id} not found`);
+      }
+
+      console.log('User found:', user); // Debug log
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async update(id, changes) {

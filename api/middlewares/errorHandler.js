@@ -1,4 +1,12 @@
 
+/**
+ * Middleware to handle Boom errors
+ * @param {Error} err - The error object
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ * @returns {void}
+ */
 
 export function logErrors(err,req,res,next){
   console.error(err);
@@ -13,6 +21,7 @@ export function errorHandler(err,req,res,next){
     }
   )
 }
+
 
 export function boomErrorHandler(err,req,res,next){
   if (err.isBoom) {
