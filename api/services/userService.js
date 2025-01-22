@@ -31,10 +31,23 @@ class UserService {
   }
 
   async update(id, changes) {
-    return {
-      id,
-      changes,
-    };
+    try {
+      // Find the user
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        throw new Error(`User with id ${id} not found`);
+      }
+
+      // Update user with changes
+      const updatedUser = await user.update(changes);
+
+      console.log('User updated:', updatedUser);
+      return updatedUser;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
   }
 
   async delete(id) {

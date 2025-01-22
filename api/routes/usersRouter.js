@@ -58,14 +58,19 @@ router.put('/:id', (req,res)=>{             //Modificar los datos del usuario
 
 //-----------PATCH
 
-router.patch('/:id', (req,res)=>{           //Modifica un dato en especifico de un usuario
-  const {id} = req.params
-  const body = req.body
-  res.json({
-    message: 'updated',
-    data: body,
-    id,
-  })
+router.patch('/:id', (req,res,next)=>{           //Modifica un dato en especifico de un usuario
+  try {
+    const {id} = req.params
+    const body = req.body
+    const response = service.update(id, body)
+    res.json({
+      message: 'updated',
+      response,
+    })
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 //-----------DELETE
