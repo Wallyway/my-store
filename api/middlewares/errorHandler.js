@@ -1,3 +1,5 @@
+import { ValidationError } from 'sequelize'
+import boom from '@hapi/boom'
 
 /**
  * Middleware to handle Boom errors
@@ -10,8 +12,9 @@
 
 export function logErrors(err,req,res,next){
   console.error(err);
-  next(err) //Middlewae tipo error, llegaria a otro middlewarre tipo error
+  next(err)                                       //Middlewae tipo error, llegaria a otro middlewarre tipo error
 }
+
 
 export function errorHandler(err,req,res,next){
   res.status(500).json(
@@ -31,5 +34,17 @@ export function boomErrorHandler(err,req,res,next){
     next(err)
   }
 
+}
+
+
+export function handleSQLError (err, req, res, next) {
+  if (err instanceof ValidationError) {
+    res.status(409).json({
+      statusCode: 409,
+      message: err.message,
+      errors: err.errors
+    })
+  }
+  next(err)
 }
 

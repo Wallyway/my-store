@@ -8,7 +8,7 @@ import express from 'express';
 import cors from 'cors';
 import routerApi from './routes/index.js';
 import jsonMiddleware from './middlewares/jsonMiddleware.js';
-import { logErrors, errorHandler, boomErrorHandler} from './middlewares/errorHandler.js';
+import { logErrors, errorHandler, boomErrorHandler, handleSQLError} from './middlewares/errorHandler.js';
 
 
 const app = express();
@@ -29,6 +29,7 @@ app.use(jsonMiddleware);          //Middleware para recibir info tipo json envia
 
 routerApi(app);
 
+app.use(handleSQLError)
 app.use(logErrors)     //Importante poner de forma secuencial
 app.use(boomErrorHandler)
 app.use(errorHandler)

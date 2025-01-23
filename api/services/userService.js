@@ -1,10 +1,12 @@
 import { User } from '../db/models/userModel.js';
+import boom from '@hapi/boom';
 
 class UserService {
   constructor() {}
 
   async create(data) {
-    return data;
+    const newUser = await User.create(data);
+    return newUser;
   }
 
   async find() {
@@ -15,15 +17,13 @@ class UserService {
   async findOne(id) {
     try {
       const user = await User.findByPk(id, {
-        attributes: ['id', 'email', 'createdAt'], // Specify which fields to return
-        raw: true // Return plain object instead of Sequelize instance
+        attributes: ['id', 'email', 'createdAt'],       // Specify which fields to return
+        raw: true                                       // Return plain object instead of Sequelize instance
       });
 
       if (!user) {
-        throw new Error(`User with id ${id} not found`);
+        throw boom.notFound(`User with id ${id} not found`);
       }
-
-      console.log('User found:', user); // Debug log
       return user;
     } catch (error) {
       throw error;
@@ -33,17 +33,10 @@ class UserService {
   async update(id, changes) {
     try {
       // Find the user
-      const user = await User.findByPk(id);
-
-      if (!user) {
-        throw new Error(`User with id ${id} not found`);
-      }
-
-      // Update user with changes
+      const user = await this.findOne(id)
       const updatedUser = await user.update(changes);
-
-      console.log('User updated:', updatedUser);
       return updatedUser;
+
     } catch (error) {
       console.error('Error updating user:', error);
       throw error;
@@ -51,7 +44,14 @@ class UserService {
   }
 
   async delete(id) {
-    return { id };
+    try {
+      const user = await this.findOne(id);            // Find the user
+      const deletedUser = await user.destroy()        // Update user with changes
+      return deletedUser;
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    };
   }
 }
 

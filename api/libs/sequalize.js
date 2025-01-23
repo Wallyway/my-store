@@ -20,5 +20,6 @@ const sequelize = new Sequelize(URI,{
 
 setUpModels(sequelize);
 sequelize.sync();
+console.log('Database connected');
 
 export default sequelize;
