@@ -12,10 +12,10 @@ import { logErrors, errorHandler, boomErrorHandler, handleSQLError} from './midd
 
 
 const app = express();
-const port = process.env.PORT || 3000; //Puerto por defecto o el que se le asigne
+const port = process.env.PORT || 3000;                            //Puerto por defecto o el que se le asigne
 
-const whitelist = ['http://localhost:8080', 'https://myapp.co']; //Lista de dominios permitidos
-const options = {               //Esto es para configurar el cors
+const whitelist = ['http://localhost:8080', 'https://myapp.co'];  //Lista de dominios permitidos
+const options = {                                                 //Esto es para configurar el cors
   origin: (origin,callback)=>{
     if(whitelist.includes(origin) || !origin){
       callback(null,true)
@@ -24,12 +24,12 @@ const options = {               //Esto es para configurar el cors
     }
   }
 }
-app.use(cors(options));                //Middleware para habilitar CORS, usualemente se coloca antes de las rutas
-app.use(jsonMiddleware);          //Middleware para recibir info tipo json enviados por post
+app.use(cors(options));                                           //Middleware para habilitar CORS, usualemente se coloca antes de las rutas
+app.use(jsonMiddleware);                                          //Middleware para recibir info tipo json enviados por post
 
 routerApi(app);
 
-app.use(logErrors)     //Importante poner de forma secuencial
+app.use(logErrors)                                                 //Importante poner de forma secuencial
 app.use(handleSQLError)
 app.use(boomErrorHandler)
 app.use(errorHandler)
@@ -39,5 +39,5 @@ app.get('/api',(req,res)=>{
 })
 
 app.listen(port,()=>{
-  console.log(`Listening at http://localhost:${port}`);  //Should be a warning (console.logs unwanted in production)
+  console.log(`Listening at http://localhost:${port}`);             //Should be a warning (console.logs unwanted in production)
 });
