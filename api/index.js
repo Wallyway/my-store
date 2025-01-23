@@ -29,8 +29,8 @@ app.use(jsonMiddleware);          //Middleware para recibir info tipo json envia
 
 routerApi(app);
 
-app.use(handleSQLError)
 app.use(logErrors)     //Importante poner de forma secuencial
+app.use(handleSQLError)
 app.use(boomErrorHandler)
 app.use(errorHandler)
 
