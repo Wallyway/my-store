@@ -16,10 +16,7 @@ class UserService {
 
   async findOne(id) {
     try {
-      const user = await User.findByPk(id, {
-        attributes: ['id', 'email', 'createdAt'],       // Specify which fields to return
-        raw: true                                       // Return plain object instead of Sequelize instance
-      });
+      const user = await User.findByPk(id)
 
       if (!user) {
         throw boom.notFound(`User with id ${id} not found`);
