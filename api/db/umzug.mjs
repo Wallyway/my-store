@@ -60,17 +60,17 @@ migrator.runAsCLI()
   });
 
 
-  export const mumzug = migrator;
+  // export const mumzug = migrator;
 
-  // Handle CLI calls
-  const type = process.argv[2]; // 'up' or 'create'
+  // // Handle CLI calls
+  // const type = process.argv[2]; // 'up' or 'create'
 
-  if (type === 'up') {
-    await mumzug.up();
-  } else if (type === 'create') {
-    const name = process.argv[4];
-    const folder = process.argv[6];
-    await mumzug.create({ name, folder });
-  }else if (type === 'down') {
-    await mumzug.down();
-  }
+  // if (type === 'up') {
+  //   await mumzug.up();
+  // } else if (type === 'create') {
+  //   const name = process.argv[4];
+  //   const folder = process.argv[6];
+  //   await mumzug.create({ name, folder });
+  // }else if (type === 'down') {
+  //   await mumzug.down();
+  // }
