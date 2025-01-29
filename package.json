@@ -6,7 +6,10 @@
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
     "lint": "eslint",
-    "migrations:generate": "sequelize-cli migration:generate --name"
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:create": "node api/db/umzug.mjs create --name=%npm_config_name% --folder=api/db/migrations",
+    "migrations:run": "node api/db/umzug.mjs up",
+    "migrations:delete": "node api/db/umzug.mjs down"
   },
   "keywords": [],
   "author": "",

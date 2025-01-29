@@ -3,5 +3,4 @@ module.exports = {
   'models-path': './api/./db/models/',
   'migrations-path': './api/db/migrations/',
   'seeders-path': './api/db/seeders/',
-
 }
