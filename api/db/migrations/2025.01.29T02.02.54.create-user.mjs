@@ -8,5 +8,6 @@ export const up = async ({context: { sequelize} }) => {
 
 export const down = async ({context: { sequelize} }) => {
   await sequelize.getQueryInterface().dropTable(USER_TABLE);
+
 };
 
